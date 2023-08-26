@@ -11,8 +11,8 @@ const LobbyScreen=()=>{
         console.log({
             email,
             room,
-        })
-    },[])
+        });
+    },[email,room]);
 
     return (
         <div>
