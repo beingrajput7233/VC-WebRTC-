@@ -31,5 +31,11 @@ io.on("connection",(socket)=>{
     });
     socket.on('call:accepted',({to,ans})=>{
         io.to(to).emit("call:accepted",{from:socket.id,ans});
-    })
+    });
+    socket.on('peer:nego:needed',({offer,to})=>{
+        io.to(to).emit("peer:nego:needed",{offer,from:socket.id});
+    });
+    socket.on('peer:nego:done',({to,ans})=>{
+        io.to(to).emit("peer:nego:final",{from:socket.id,ans});
+    });
 });
