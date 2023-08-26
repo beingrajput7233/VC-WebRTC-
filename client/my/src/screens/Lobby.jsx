@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useState ,useCallback,useEffect} from "react";
 import { useSocket } from "../context/Socketprovider";
 // lobby mein user id and room number lenge
@@ -8,6 +9,7 @@ const LobbyScreen=()=>{
     {/*  form submission */}
 
     const socket=useSocket();
+    const navigate=useNavigate();
     console.log(socket);
 
     const handleSubmitForm=useCallback((e)=>{
@@ -22,7 +24,8 @@ const LobbyScreen=()=>{
 
     const handleJoinRoom=useCallback((data)=>{
         const {email,room}=data;
-        console.log(email,room);
+        // to navigate to desired room number
+        navigate(`/room/${room}`);
     },[]);
 
     // Ab backend se confirmation aane par

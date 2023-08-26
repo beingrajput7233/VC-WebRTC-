@@ -17,6 +17,10 @@ io.on("connection",(socket)=>{
         emailtoSocketIdMap.set(email,socket.id);
         socketIdtoemailMap.set(socket.id,email);
         
+        // ye us room mein jo phle se hh usko
+        //  btaane ke liye
+        io.to(room).emit("user:joined",{email, id:socket.id});
+        socket.join(room);
 
         // ye front-end ko confirmation bhej rhe h
         io.to(socket.id).emit("room:join",data);
