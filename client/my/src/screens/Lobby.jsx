@@ -1,18 +1,41 @@
 import React from "react";
-import { useState ,useCallback} from "react";
+import { useState ,useCallback,useEffect} from "react";
+import { useSocket } from "../context/Socketprovider";
 // lobby mein user id and room number lenge
 const LobbyScreen=()=>{
     const [email,setEmail]=useState("");
     const [room,setRoom]=useState("");
     {/*  form submission */}
 
+    const socket=useSocket();
+    console.log(socket);
+
     const handleSubmitForm=useCallback((e)=>{
         e.preventDefault();
+        // ye frontend se request gai join krne ki
+        socket.emit("room:join",{email,room});
         console.log({
             email,
             room,
         });
-    },[email,room]);
+    },[email,room,socket]);
+
+    const handleJoinRoom=useCallback((data)=>{
+        const {email,room}=data;
+        console.log(email,room);
+    },[]);
+
+    // Ab backend se confirmation aane par
+    useEffect(()=>{
+        socket.on("room:join",handleJoinRoom);
+        return ()=>{
+            socket.off('room:join',handleJoinRoom);
+        }
+    },[socket]);
+
+    // ab room join krna hh
+
+
 
     return (
         <div>
